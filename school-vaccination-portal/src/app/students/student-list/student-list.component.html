@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="header-section">
+    <h2>Student List</h2>
+    <div class="search-box">
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Search students</mat-label>
+        <input matInput placeholder="Enter name or class">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field> -->
+    </div>
+  </div>
+  
+  <div class="actions-bar">
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" class="action-button" (click)="router.navigate(['/students/add'])">
+        <mat-icon>person_add</mat-icon>
+        Add New Student
+      </button>
+      <button mat-raised-button color="primary" class="action-button" (click)="router.navigate(['/students/bulk-upload'])">
+        <mat-icon>upload_file</mat-icon>
+        Bulk Upload
+      </button>
+    </div>
+    <!-- <div class="filter-options">
+        <mat-chip color="primary" selected>All</mat-chip>
+        <mat-chip>Vaccinated</mat-chip>
+        <mat-chip>Not Vaccinated</mat-chip>
+    </div> -->
+  </div>
+  
+  <div class="table-container mat-elevation-z2">
+    <mat-table [dataSource]="students" class="student-table">
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+        <mat-cell *matCellDef="let student">{{ student.fullName }}</mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="className">
+        <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
+        <mat-cell *matCellDef="let student">
+          <span class="class-badge">{{ student.className }}</span>
+        </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="isVaccinated">
+        <mat-header-cell *matHeaderCellDef>Vaccinated</mat-header-cell>
+        <mat-cell *matCellDef="let student">
+          <span class="status-chip" [ngClass]="student.isVaccinated ? 'vaccinated' : 'not-vaccinated'">
+            <mat-icon class="status-icon">{{ student.isVaccinated ? 'check_circle' : 'cancel' }}</mat-icon>
+            {{ student.isVaccinated ? 'Yes' : 'No' }}
+          </span>
+        </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let student">
+          <button mat-icon-button color="primary" matTooltip="Edit Student" (click)="onEdit(student.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Delete Student" (click)="onDelete(student.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" matTooltip="View Details">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" class="student-row"></mat-row>
+    </mat-table>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+

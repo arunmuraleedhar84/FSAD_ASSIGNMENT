@@ -1,0 +1,91 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="sidenav-header">
+      <!-- <img src="/api/placeholder/40/40" alt="Vaccination Logo" class="logo"> -->
+      <h2>Vaccination Portal</h2>
+    </div>
+    
+    <mat-nav-list>
+      <mat-list-item routerLink="/students" routerLinkActive="active-link">
+        <mat-icon>group</mat-icon>
+        <span class="fontcolor">Manage Students</span>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/drives" routerLinkActive="active-link">
+        <mat-icon>medical_services</mat-icon>
+        <span class="fontcolor">Vaccination Management</span>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/reports" routerLinkActive="active-link">
+        <mat-icon>assessment</mat-icon>
+        <span class="fontcolor">Reports</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/login" >
+        <mat-icon>logout</mat-icon>
+        <span (click)="logout()" class="fontcolor">Logout</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="content-header">
+      <h1>Dashboard</h1>
+    </div>
+    
+    <div class="dashboard-container">
+      <mat-card class="summary-card students-card">
+        <mat-icon class="card-icon">people_alt</mat-icon>
+        <div class="card-content">
+          <h3>Total Students</h3>
+          <p class="stat-value">{{ summary.totalStudents }}</p>
+        </div>
+      </mat-card>
+
+      <mat-card class="summary-card vaccinated-card">
+        <mat-icon class="card-icon">verified</mat-icon>
+        <div class="card-content">
+          <h3>Vaccinated Students</h3>
+          <p class="stat-value">{{ summary.vaccinatedStudents }}</p>
+        </div>
+      </mat-card>
+
+      <mat-card class="summary-card coverage-card">
+        <mat-icon class="card-icon">health_and_safety</mat-icon>
+        <div class="card-content">
+          <h3>Vaccination Coverage</h3>
+          <p class="stat-details">{{ summary.vaccinatedStudents }} / {{ summary.totalStudents }} vaccinated</p>
+          <p class="percentage">{{ summary.vaccinationPercentage | number: '1.0-2' }}%</p>
+          <mat-progress-bar 
+            mode="determinate" 
+            [value]="summary.vaccinationPercentage"
+            class="coverage-progress">
+          </mat-progress-bar>
+        </div>
+      </mat-card>
+
+      <mat-card class="summary-card drives-card">
+        <mat-icon class="card-icon">event</mat-icon>
+        <div class="card-content">
+          <h3>Upcoming Drives</h3>
+          <p class="stat-value">{{ summary.upcomingDrivesCount }}</p>
+        </div>
+      </mat-card>
+      
+      <mat-card class="summary-card next-drive-card">
+        <mat-icon class="card-icon">event_available</mat-icon>
+        <div class="card-content">
+          <h3>Next Drive Date</h3>
+          <p *ngIf="summary.nextUpcomingDriveDate; else noDrive" class="date-value">
+            {{ summary.nextUpcomingDriveDate | date:'longDate' }}
+          </p>
+          <ng-template #noDrive>
+            <p class="no-data">No upcoming drives</p>
+          </ng-template>
+        </div>
+      </mat-card>
+    </div>
+    
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

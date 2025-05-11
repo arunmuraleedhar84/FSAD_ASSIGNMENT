@@ -1,0 +1,15 @@
+
+<form  class="upload-card">
+  <mat-card class="mat-elevation-z4 ">
+    <h3 class="title">Bulk Upload Students Details</h3>
+  
+    <div class="file-input-container">
+      <input type="file" (change)="onFileSelected($event)" class="file-input"/>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="upload()" [disabled]="!selectedFile">
+        Upload
+      </button>
+    </div>
+  </mat-card>
+</form>

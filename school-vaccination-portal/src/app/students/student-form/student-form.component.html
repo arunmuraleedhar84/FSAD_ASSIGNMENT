@@ -1,0 +1,53 @@
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="student-form" style="max-width: 600px; margin: auto; padding: 16px;">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-title class="title">Student Information</mat-card-title>
+    <mat-card-content>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Student Name</mat-label>
+        <input matInput formControlName="fullName" required />
+        <mat-error *ngIf="studentForm.controls['fullName'].hasError('required')">
+          Name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Class</mat-label>
+        <input matInput formControlName="className" required />
+        <mat-error *ngIf="studentForm.controls['className'].hasError('required')">
+          Class is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Section</mat-label>
+        <input matInput formControlName="section" />
+        <mat-error *ngIf="studentForm.controls['section'].hasError('required')">
+          Section is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Guardian Name</mat-label>
+        <input matInput formControlName="guardianName" />
+        <mat-error *ngIf="studentForm.controls['guardianName'].hasError('required')">
+          Guardian Name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <div *ngIf="studentForm.value.createdTime" class="timestamp">
+        <p><strong>Created:</strong> {{ studentForm.value.createdTime | date:'short' }}</p>
+      </div>
+      <div *ngIf="studentForm.value.updatedTime" class="timestamp">
+        <p><strong>Last Updated:</strong> {{ studentForm.value.updatedTime | date:'short' }}</p>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="studentForm.invalid">
+        Save
+      </button>
+      <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

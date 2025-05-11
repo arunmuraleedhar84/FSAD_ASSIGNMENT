@@ -1,0 +1,70 @@
+<div class="vaccination-records-container">
+  <div class="controls-container">
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Filter by Vaccine Name</mat-label>
+        <input matInput [formControl]="filter" (keyup)="applyFilter($event)" placeholder="Enter vaccine name">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    
+    <div class="export-buttons">
+      <button mat-raised-button color="primary" (click)="exportCSV()" class="export-btn">
+        <mat-icon>file_download</mat-icon>
+        Export CSV
+      </button>
+      <!-- <button mat-raised-button color="accent" (click)="exportPDF()" class="export-btn">
+        <mat-icon>picture_as_pdf</mat-icon>
+        Export PDF
+      </button> -->
+    </div>
+  </div>
+<div class="table-container mat-elevation-z2">
+<table mat-table [dataSource]="filteredData" class="records-table" matSort>
+  <ng-container matColumnDef="studentName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
+    <td mat-cell *matCellDef="let row"> {{ row.studentName }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="class">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Class </th>
+    <td mat-cell *matCellDef="let row"> {{ row.className }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="guard">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Class </th>
+    <td mat-cell *matCellDef="let row"> {{ row.guardianName }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="vaccineName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vaccine Name </th>
+    <td mat-cell *matCellDef="let row"> 
+      <div class="vaccine-badge">{{ row.vaccineName }}</div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="vaccinationDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vaccination Date </th>
+    <td mat-cell *matCellDef="let row"> {{ row.vaccinationDate | date:'MMM dd, yyyy' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="vaccinated">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+    <td mat-cell *matCellDef="let row">
+      <div class="status-badge" [ngClass]="row.vaccinated ? 'status-yes' : 'status-no'">
+        {{ row.vaccinated ? 'Vaccinated' : 'Not Vaccinated' }}
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+      [ngClass]="{'vaccinated-row': row.vaccinated}"></tr>
+      
+  <!-- Row shown when no matching data -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell no-data-message" colspan="5">No records matching the filter</td>
+  </tr>
+</table>
+</div>
+

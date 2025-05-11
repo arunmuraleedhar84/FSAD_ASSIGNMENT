@@ -1,0 +1,165 @@
+<mat-card class="drive-card">
+  <div class="header">
+    <h2>Vaccination Drives</h2>
+    <button mat-raised-button color="primary" (click)="createDrive()" class="add-button">
+      <mat-icon>add</mat-icon> Add New Drive
+    </button>
+  </div>
+  
+  <div class="table-container mat-elevation-z2">
+    <!-- Main table -->
+    <table mat-table [dataSource]="drives" class="drives-table" matSort>
+      <ng-container matColumnDef="driveName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Drive Name </th>
+        <td mat-cell *matCellDef="let drive">{{ drive.driveName }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let drive">
+          {{ drive.date | date: 'MMM dd, yyyy' }}
+        </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="vaccineName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vaccine </th>
+        <td mat-cell *matCellDef="let drive">
+          <span class="vaccine-chip">{{ drive.vaccineName }}</span>
+        </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="availableDoses">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Doses </th>
+        <td mat-cell *matCellDef="let drive">
+          <span [class.low-stock]="drive.availableDoses < 10">
+            {{ drive.availableDoses }}
+          </span>
+        </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="applicableClasses">
+        <th mat-header-cell *matHeaderCellDef> Applicable Classes </th>
+        <td mat-cell *matCellDef="let drive">
+        <td mat-cell *matCellDef="let drive">{{ formatClassList(drive.applicableClasses) }}
+        </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let drive">
+          <button mat-icon-button color="accent" (click)="editDrive(drive)" matTooltip="Edit Drive">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+      <!-- Row shown when no matching data -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" colspan="6">No vaccination drives matching the filter</td>
+      </tr>
+    </table>
+    
+    <!-- Pagination -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</mat-card>
+
+<!-- CSS to be added to your component stylesheet -->
+<style>
+.drive-card {
+  margin: 16px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #f5f5f5;
+  border-radius: 8px 8px 0 0;
+}
+
+.header h2 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.add-button {
+  height: 36px;
+}
+
+.table-container {
+  padding: 16px;
+  overflow: auto;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.search-field {
+  width: 50%;
+}
+
+.status-filter {
+  margin-left: auto;
+}
+
+.drives-table {
+  width: 100%;
+}
+
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+.upcoming-row {
+  background-color: rgba(33, 150, 243, 0.05);
+}
+
+th.mat-header-cell {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.highlight-date {
+  font-weight: 500;
+  color: #1976d2;
+}
+
+.low-stock {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.vaccine-chip {
+  padding: 4px 12px;
+  background-color: #e0e0e0;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+.classes-container {
+  max-width: 200px;
+}
+
+.no-data {
+  padding: 16px;
+  text-align: center;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+mat-paginator {
+  margin-top: 16px;
+}
+</style>

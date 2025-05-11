@@ -1,0 +1,77 @@
+<mat-card class="drive-form-card">
+  <div class="card-header">
+    <h2 class="form-title">{{ driveId ? 'Edit' : 'Create' }} Vaccination Drive</h2>
+  </div>
+
+  <form [formGroup]="driveForm" (ngSubmit)="onSubmit()" class="drive-form">
+    <div class="form-section">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Drive Name</mat-label>
+        <input matInput formControlName="driveName" placeholder="Enter drive name" />
+        <mat-icon matPrefix>event</mat-icon>
+        <mat-error *ngIf="driveForm.get('driveName')?.hasError('required')">
+          Drive name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" formControlName="date" />
+        <mat-icon matPrefix>calendar_today</mat-icon>
+        <mat-error *ngIf="driveForm.get('date')?.hasError('required')">
+          Date is required
+        </mat-error>
+        <mat-error *ngIf="driveForm.get('date')?.hasError('dateTooSoon')">
+          Date should be at least 15 days in future
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-section">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Vaccine</mat-label>
+        <mat-select formControlName="vaccineId">
+          <mat-option *ngFor="let vaccine of vaccines" [value]="vaccine.id">
+            {{ vaccine.name }} - {{ vaccine.manufacturer }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>medication</mat-icon>
+        <mat-error *ngIf="driveForm.get('vaccineId')?.hasError('required')">
+          Vaccine selection is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Available Doses</mat-label>
+        <input matInput type="number" formControlName="availableDoses" min="1" placeholder="Enter number of doses" />
+        <mat-icon matPrefix>inventory</mat-icon>
+        <mat-error *ngIf="driveForm.get('availableDoses')?.hasError('required')">
+          Number of doses is required
+        </mat-error>
+        <mat-error *ngIf="driveForm.get('availableDoses')?.hasError('min')">
+          Must have at least 1 dose
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-section">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Applicable Classes</mat-label>
+        <input matInput type="string" formControlName="applicableClasses" placeholder="e.g. Class 1, Class 2" />
+        <mat-icon matPrefix>group</mat-icon>
+        <mat-hint>Enter comma-separated class names</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-stroked-button type="button" routerLink="/drives">
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="driveForm.invalid" class="submit-button">
+        <mat-icon>{{ driveId ? 'update' : 'add_circle' }}</mat-icon>
+        {{ driveId ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</mat-card>
+

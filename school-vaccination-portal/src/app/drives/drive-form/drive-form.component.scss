@@ -1,0 +1,72 @@
+.drive-form-card {
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  padding: 16px 24px 0;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #3f51b5;
+}
+
+.drive-form {
+  padding: 24px;
+}
+
+.form-section {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}
+
+mat-icon {
+  margin-right: 8px;
+  color: #5c6bc0;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.submit-button {
+  min-width: 120px;
+}
+
+/* Make sure the date input has the correct padding */
+input[type="date"] {
+  padding: 8px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .drive-form-card {
+    margin: 16px;
+    width: auto;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+}
