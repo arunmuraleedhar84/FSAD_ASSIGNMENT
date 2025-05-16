@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentService } from '../../students/student.service';
 import { Student } from '../../models/student.model';
 import { inject } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';  
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';  
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,21 +29,35 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ],
 })
 export class StudentListComponent {
-  students: Student[] = [];
+  dataSourcestudent = new MatTableDataSource<any>([]);
+  
    displayedColumns: string[] = ['fullName', 'className', 'isVaccinated', 'actions'];
   private studentService = inject(StudentService);
   public router = inject(Router);
-
   constructor() {
   }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+ 
 
   ngOnInit(): void {
     this.loadStudents();
   }
 
+  
+ngAfterViewInit() {
+    this.dataSourcestudent.paginator = this.paginator;
+  }
+  
   loadStudents(): void {
     this.studentService.getAll().subscribe(students => {
-      this.students = students;
+      setTimeout(() => {
+        this.dataSourcestudent.paginator = this.paginator;
+      }, 10);
+
+    this.dataSourcestudent = new MatTableDataSource(students);
+
+
     });
   }
 

@@ -18,6 +18,6 @@ export class VaccineService {
   constructor(private http: HttpClient) {}
 
   getVaccines() {
-    return this.http.get(`${environment.apiUrl}/Vaccines`);
+    return this.http.get(`${environment.apiUrl}Vaccines`);
   }
 }

@@ -90,7 +90,7 @@ export class DriveFormComponent implements OnInit {
     this.driveService.getDriveById(id).subscribe((drive: VaccinationDrive) => {
       this.driveForm.patchValue({
         driveName: drive.driveName,
-        date: new Date(drive.date),
+        date: this.formatDateForInput (new Date(drive.date)),
         vaccineId: drive.vaccineId,
         availableDoses: drive.availableDoses,
         applicableClasses:drive.applicableClasses
@@ -100,6 +100,14 @@ export class DriveFormComponent implements OnInit {
     });
   }
 
+  
+formatDateForInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
   onSubmit(): void {
     if (this.driveForm.invalid) return;
 

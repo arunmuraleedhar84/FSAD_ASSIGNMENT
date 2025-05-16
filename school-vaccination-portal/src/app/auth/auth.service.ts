@@ -10,11 +10,12 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
 
   private tokenKey = 'authToken';
+  public baseUrl = environment.apiUrl
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/auth/login`, { username, password }).pipe(
+    return this.http.post<any>(this.baseUrl +`Auth/login`, { username, password }).pipe(
       tap((res: any) => {
         if (res?.token) {
           this.setToken(res.token);

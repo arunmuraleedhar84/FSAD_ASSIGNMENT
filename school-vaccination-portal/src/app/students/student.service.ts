@@ -16,7 +16,7 @@ export interface Student {
 })
 export class StudentService {
 
-  private apiUrl = `${environment.apiUrl}/students`;
+  private apiUrl = `${environment.apiUrl}students`;
 
   constructor(private http: HttpClient) {}
 

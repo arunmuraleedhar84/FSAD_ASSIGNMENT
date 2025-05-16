@@ -7,6 +7,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -24,13 +25,15 @@ export class ReportListComponent {
 
   constructor(private http: HttpClient) {}
 
+    public baseUrl = environment.apiUrl
+  
   ngOnInit(): void {
     this.fetchData();
     
   }
 
   fetchData(): void {
-    this.http.get<any[]>('https://localhost:7281/api/Reports/vaccination').subscribe(data => {
+    this.http.get<any[]>(this.baseUrl + 'Reports/vaccination').subscribe(data => {
       this.dataSource.data = data;
       // Apply initial filter if there's a value
       if (this.filter.value) {

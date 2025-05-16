@@ -19,6 +19,6 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
   getDashboardSummary() {
-    return this.http.get<DashboardSummary>(`${environment.apiUrl}/dashboard/summary`);
+    return this.http.get<DashboardSummary>(`${environment.apiUrl}dashboard/summary`);
   }
 }

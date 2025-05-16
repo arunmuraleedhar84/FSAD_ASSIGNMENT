@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class StudentBulkUploadComponent {
 
   constructor(private http: HttpClient) {}
 
+  public baseUrl = environment.apiUrl
+  
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -39,7 +42,7 @@ export class StudentBulkUploadComponent {
   
     const formData = new FormData();
     formData.append('StudentFile', this.selectedFile, this.selectedFile.name);
-    this.http.post('https://localhost:7281/api/Students/bulk-upload', formData).subscribe({
+    this.http.post(this.baseUrl + 'Students/bulk-upload', formData).subscribe({
       next: () => alert('Upload successful'),
       error: (error) => {
         console.error('Upload failed:', error);

@@ -44,8 +44,8 @@ export function app(): express.Express {
   return server;
 }
 const server = app();
-server.listen(7281, () => {
-  console.log(`Node server listening on http://localhost:${7281}`);
+server.listen(5228, () => {
+  console.log(`Node server listening on http://localhost:${5228}`);
 }).setTimeout(60000); // Increase timeout to 60 seconds
 
 function run(): void {
@@ -57,5 +57,6 @@ function run(): void {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
+
 
 run();
